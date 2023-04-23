@@ -1,9 +1,4 @@
-# NativeBase TypeScript Expo Template
+# Trader Joy App v0.1
 
-The official NativeBase TypeScript template for [Expo](https://docs.expo.io/)
+The official trader Joy POS app.
 
-## Usage
-
-```sh
-expo init my-app --template @native-base/expo-template-typescript
-```

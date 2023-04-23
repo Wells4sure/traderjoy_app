@@ -12,7 +12,7 @@ import {
   VStack,
   Box,
 } from "native-base";
-import NativeBaseIcon from "./components/NativeBaseIcon";
+import NativeBaseIcon from "./src/components/NativeBaseIcon";
 
 // Define the config
 const config = {
@@ -69,7 +69,7 @@ export default function App() {
 }
 
 // Color Switch Component
-function ToggleDarkMode() {
+function ToggleDarkMode() {``
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <HStack space={2} alignItems="center">
