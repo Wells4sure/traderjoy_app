@@ -5,6 +5,7 @@ import { AuthStackParamList } from "../../types/navigation";
 import Login from "../../Screens/Auth/Login";
 import Register from "../../Screens/Auth/Register";
 import Welcome from "../../Screens/Auth/Welcome";
+import PasswordReset from "../../Screens/Auth/PasswordReset";
 
 const index = () => {
   const AuthStack = createNativeStackNavigator<AuthStackParamList>();
@@ -12,6 +13,7 @@ const index = () => {
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
       <AuthStack.Screen name="Welcome" component={Welcome} />
       <AuthStack.Screen name="Login" component={Login} />
+      <AuthStack.Screen name="PasswordReset" component={PasswordReset} />
       <AuthStack.Screen name="Register" component={Register} />
     </AuthStack.Navigator>
   );
