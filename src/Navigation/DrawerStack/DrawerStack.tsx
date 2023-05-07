@@ -33,7 +33,7 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { DrawerHeaderBackground, UserIcon } from "../../../assets/images";
-import Pos from "../../Screens/Pos";
+import Pos from "../../Screens/Pos/PosComponent";
 
 const Drawer = createDrawerNavigator<HomeStackParamList>();
 const SCREEN_HEIGHT = Dimensions.get("screen").height;
