@@ -4,6 +4,7 @@ import { CartI } from "../types/posTypes";
 import ReusableTable from "./ReusableTable";
 import CartItem from "./CartItem";
 import Totals from "./Totals";
+import ChargeButton from "./ChargeButton";
 
 export default function CartSections() {
   const tableHead = ["Item", "Quantity", "Price", "Total"];
@@ -12,6 +13,12 @@ export default function CartSections() {
     <>
       <CartItem />
       <Totals />
+      <ChargeButton
+        text={"Charge"}
+        onPress={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
     </>
   );
 }

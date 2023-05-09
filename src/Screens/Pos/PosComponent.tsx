@@ -1,10 +1,19 @@
 import { View, Text, useWindowDimensions, StyleSheet } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Box, Center, Flex, HStack, ScrollView, VStack } from "native-base";
 import HomeHeader from "../../components/HomeHeader";
 import InputForm from "../../components/InputForm";
 import TouchPointButton from "../../components/TouchPointButton";
 import CartSections from "../../components/CartSections";
+import CategoryBtn from "../../components/CategoryBtn";
+import TouchScreenButtons from "../../components/TouchScreenButtons";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../redux/hooks";
+import { currentPos } from "../../redux/slice/PosSlice";
+import TouchCategoryButtons from "../../components/TouchCategoryButtons";
+import { categories } from "../../utils/dummy";
+import { CategoryI, ProductI } from "../../types";
+import QtyModal from "./QtyModal";
 
 function useStyles() {
   const { width, height } = useWindowDimensions();
@@ -26,16 +35,35 @@ function useStyles() {
 }
 
 const PosComponent = () => {
-  function rand(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-
-  function randColor() {
-    const colors = ["red", "blue", "green", "yellow", "purple"];
-    return colors[rand(0, colors.length - 1)];
-  }
-
+  const dispatch = useDispatch();
+  const { products: Items, cart } = useAppSelector(currentPos);
+  const [products, setProducts] = useState(Items);
+  const [showQtyModal, setShowQtyModal] = useState(false);
   const Styles = useStyles();
+
+  const handleFilterByCategory = (category: CategoryI) => {
+    const filteredProducts = Items.filter(
+      (product) => product.category.name === category.name
+    );
+
+    setProducts(filteredProducts);
+  };
+
+  const handleAddToCart = (product: ProductI) => {
+    // open QtyModal
+    setShowQtyModal(true);
+  };
+
+  const addOrRemove = (action: string, value: number) => {
+    if (action === "add") {
+      // add to cart
+      console.log("add to cart");
+    } else {
+      // remove from cart
+      console.log("remove from cart");
+    }
+  };
+
   return (
     <>
       <VStack flex={1}>
@@ -44,70 +72,50 @@ const PosComponent = () => {
         <HStack>
           <VStack space={4} alignItems="center" style={Styles.left}>
             <Box px={5} w="100%">
-              <InputForm
-                placeholder={"Search"}
-                type={"text"}
-                value={""}
-                name={"Search"}
-                onChange={function (e: any): void {
-                  throw new Error("Function not implemented.");
-                }}
-              />
-            </Box>
-            <Box px={5} w="100%">
               <ScrollView
                 showsHorizontalScrollIndicator={false}
                 horizontal={true}
               >
                 <HStack space={3} justifyContent="center">
-                  <Flex
-                    direction="row"
-                    flexWrap="wrap"
-                    justifyContent="space-evenly"
-                  >
-                    <Box mx={1}>This is Category</Box>
-                    <Box>This is Category</Box>
-                    <Box>This is Category</Box>
-                    <Box>This is Category</Box>
-                    <Box>This is Category</Box>
-                    <Box>This is Category</Box>
-                    <Box>This is Category</Box>
-                    <Box>This is Category</Box>
-                    <Box>This is Category</Box>
-                    <Box>This is Category</Box>
-                    <Box>This is Category</Box>
-                  </Flex>
+                  <TouchCategoryButtons
+                    categories={categories}
+                    onPress={(category: CategoryI) =>
+                      handleFilterByCategory(category)
+                    }
+                  />
                 </HStack>
               </ScrollView>
             </Box>
-            <Box px={5} w="100%" h="80%">
+            <Box px={5} w="100%" h="87%">
               <ScrollView showsVerticalScrollIndicator={false}>
                 <VStack space={3} justifyContent="center">
-                  <Flex
-                    direction="row"
-                    flexWrap="wrap"
-                    justifyContent="space-evenly"
-                  >
-                    {[...Array(35)].map((_, i) => (
-                      <TouchPointButton
-                        key={i}
-                        name={`Long ass Test name ${i}`}
-                        description={`${i + rand(0, 999)} mls`}
-                        color={randColor()}
-                        onPress={() => console.log(`this is ${i}`)}
-                      />
-                    ))}
-                  </Flex>
+                  <TouchScreenButtons
+                    products={products}
+                    onPress={(product: ProductI) => handleAddToCart(product)}
+                  />
                 </VStack>
               </ScrollView>
             </Box>
           </VStack>
           <VStack space={2} alignItems="center" style={Styles.right}>
             <Text>Cart</Text>
-            <CartSections />
+            <Box px={1} w="100%" h="87%" justifyContent={"space-between"}>
+              <CartSections />
+            </Box>
           </VStack>
         </HStack>
       </VStack>
+
+      {/* Modals */}
+      <QtyModal
+        isOpen={showQtyModal}
+        onClose={() => setShowQtyModal(false)}
+        qtyValue={0}
+        onChange={(value: number) => console.log(value)}
+        addOrRemove={(action: string, value: number) =>
+          addOrRemove(action, value)
+        }
+      />
     </>
   );
 };
