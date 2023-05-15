@@ -1,8 +1,21 @@
-import { View } from "react-native";
 import React from "react";
-import { Box, Pressable, Text } from "native-base";
+import { Box, HStack, IconButton, Pressable, Text, VStack } from "native-base";
+import { CartI } from "../types";
+import { MaterialIcons } from "@expo/vector-icons";
 
-const CartItem = () => {
+interface CartItemProps {
+  item: CartI;
+  handleEditCartItem: (item: CartI) => void;
+  removeCartItem: (item: CartI) => void;
+}
+
+const CartItem = ({
+  item,
+  handleEditCartItem,
+  removeCartItem,
+}: CartItemProps) => {
+  const SUB_TOTAL = item.price * item.quantity;
+
   return (
     <Box
       p="2"
@@ -18,7 +31,7 @@ const CartItem = () => {
       flexDirection="row"
     >
       <Pressable
-        onPress={() => console.log("I'm Pressed")}
+        onPress={() => handleEditCartItem(item)}
         overflow="hidden"
         borderWidth="1"
         borderColor="coolGray.300"
@@ -31,10 +44,34 @@ const CartItem = () => {
           flexDirection="row"
           alignItems="center"
           justifyContent="space-between"
+          w={"100%"}
         >
-          <Text>This is a cart item</Text>
-          <Text> X 2</Text>
-          <Text> 200</Text>
+          <HStack
+            space={2}
+            alignItems="flex-start"
+            justifyContent={"space-between"}
+            w={"100%"}
+          >
+            <Text isTruncated w="50%" fontSize={"sm"}>
+              {item.product.name}
+            </Text>
+            <Text fontSize={11} color="coolGray.800">
+              {` X ${item.quantity}`}
+            </Text>
+            <Text fontWeight={"bold"}> {SUB_TOTAL.toFixed(2)}</Text>
+            <IconButton
+              size={"xs"}
+              variant="outline"
+              colorScheme="secondary"
+              _icon={{
+                as: MaterialIcons,
+                name: "close",
+              }}
+              onPress={() => {
+                removeCartItem(item);
+              }}
+            />
+          </HStack>
         </Box>
       </Pressable>
     </Box>

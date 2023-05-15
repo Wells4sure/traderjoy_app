@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 import {
   Box,
+  Button,
   FormControl,
   Icon,
   Input,
@@ -13,22 +14,28 @@ import {
   Stack,
 } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
+import { ProductI } from "../../types";
+import { currentPos } from "../../redux/slice/PosSlice";
+import { useAppSelector } from "../../redux/hooks";
 
 interface QtyModalProps {
   isOpen: boolean;
-  qtyValue: number;
+  selectedProduct: ProductI | null;
   onChange: (value: number) => void;
   addOrRemove: (action: string, value: number) => void;
   onClose: () => void;
+  handleSubmitQty: () => void;
 }
 
 const QtyModal = ({
   isOpen,
   onClose,
-  qtyValue,
+  selectedProduct,
   onChange,
   addOrRemove,
+  handleSubmitQty,
 }: QtyModalProps) => {
+  const { OrderQty } = useAppSelector(currentPos);
   return (
     <Modal
       isOpen={isOpen}
@@ -40,19 +47,24 @@ const QtyModal = ({
     >
       <Modal.Content>
         <Modal.CloseButton />
-        <Modal.Header>Enter Qty</Modal.Header>
+        <Modal.Header> {`Enter ${selectedProduct?.name} Qty`}</Modal.Header>
         <Modal.Body>
-          <Box w="100%" alignItems={"center"}>
+          <Box
+            w="100%"
+            alignItems="center"
+            justifyContent="center"
+            maxW={"100%"}
+          >
             <FormControl>
               <InputGroup
-                w={{
-                  base: "70%",
-                  md: "285",
-                }}
+                mx="auto"
+                w="80%"
+                alignItems="center"
+                justifyContent="center"
               >
                 <InputLeftAddon
                   children={
-                    <Pressable onPress={() => addOrRemove("remove", qtyValue)}>
+                    <Pressable onPress={() => addOrRemove("remove", OrderQty)}>
                       <Icon
                         as={<MaterialIcons name={"remove-circle"} />}
                         size={5}
@@ -63,12 +75,9 @@ const QtyModal = ({
                   }
                 />
                 <Input
-                  w={{
-                    base: "70%",
-                    md: "285",
-                  }}
+                  w="100%"
                   placeholder="Qty"
-                  value={qtyValue.toString()}
+                  value={OrderQty.toString()}
                   keyboardType="numeric"
                   textAlign="center"
                   onChangeText={(value) => {
@@ -77,7 +86,7 @@ const QtyModal = ({
                 />
                 <InputRightAddon
                   children={
-                    <Pressable onPress={() => addOrRemove("add", qtyValue)}>
+                    <Pressable onPress={() => addOrRemove("add", OrderQty)}>
                       <Icon
                         as={<MaterialIcons name={"add-circle"} />}
                         size={5}
@@ -91,6 +100,19 @@ const QtyModal = ({
             </FormControl>
           </Box>
         </Modal.Body>
+        <Modal.Footer>
+          <Modal.Footer>
+            <Button
+              // full width
+              w={"100%"}
+              onPress={() => {
+                handleSubmitQty();
+              }}
+            >
+              Save
+            </Button>
+          </Modal.Footer>
+        </Modal.Footer>
       </Modal.Content>
     </Modal>
   );

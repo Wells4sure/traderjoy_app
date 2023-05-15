@@ -21,7 +21,13 @@ const TouchPointButton = ({
         {({ isHovered, isFocused, isPressed }) => {
           return (
             <Box
-              bg={isPressed ? `${color}.500` : isHovered ? `${color}.500` : `${color}.800`}
+              bg={
+                isPressed
+                  ? `${color}.500`
+                  : isHovered
+                  ? `${color}.500`
+                  : `${color}.800`
+              }
               style={{
                 transform: [
                   {
@@ -36,7 +42,7 @@ const TouchPointButton = ({
               borderWidth="1"
               borderColor="coolGray.400"
             >
-              <Text color="warmGray.100" isTruncated w="100%">
+              <Text color="warmGray.100" isTruncated w="100%" bold>
                 {name}
               </Text>
 

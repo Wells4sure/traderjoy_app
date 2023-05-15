@@ -41,8 +41,8 @@ const SelectForm = ({
         }}
         variant="underlined"
       >
-        {selectItems.map((item) => {
-          return <Select.Item label={item} value={item} />;
+        {selectItems.map((item, i) => {
+          return <Select.Item key={i} label={item} value={item} />;
         })}
       </Select>
     </FormControl>

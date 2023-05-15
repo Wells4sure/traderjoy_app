@@ -1,6 +1,5 @@
 import { View } from "react-native";
 import React from "react";
-import { CartI } from "../types/posTypes";
 import { Box, IconButton, VStack, Text } from "native-base";
 
 interface PropsI<T> {

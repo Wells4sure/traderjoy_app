@@ -15,10 +15,10 @@ const ChargeButton = ({ onPress, text }: ChargeButtonProps) => {
         fontWeight: "medium",
       }}
       _light={{
-        bg: `tertiary.800`,
+        bg: `indigo.800`,
       }}
       _dark={{
-        bg: `primary.500`,
+        bg: `indigo.500`,
       }}
       size="md"
       borderRadius="5"  

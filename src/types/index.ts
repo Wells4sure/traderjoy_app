@@ -58,9 +58,9 @@ export interface AuthStateI {
   
   export interface PosStateI {
     products: ProductI[];
-    cart: CartI[];
+    cartItems: CartI[];
     saleDetails: SaleDetailsI;
-    filteredProducts?: ProductI[];
+    OrderQty: number;
   }
   
   export interface RowKeyColumnI<T> {

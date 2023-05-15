@@ -17,7 +17,7 @@ const TouchScreenButtons = ({ onPress, products }: TouchScreenButtonsProps) => {
           key={i}
           name={product.name}
           description={product.description}
-          color={`${product.category.color}`}
+          color={product.category.color}
           onPress={() => onPress(product)}
         />
       ))}

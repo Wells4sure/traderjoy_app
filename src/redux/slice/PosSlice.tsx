@@ -5,7 +5,7 @@ import { RootState } from "../store";
 
 const initialState: PosStateI = {
   products: products, // dummy data
-  cart: [],
+  cartItems: [],
   saleDetails: {
     cart: [],
     paymentDetails: {
@@ -21,7 +21,7 @@ const initialState: PosStateI = {
 
     date: "",
   },
-  filteredProducts: [],
+  OrderQty: 1,
 };
 
 const PosSlice = createSlice({
@@ -32,31 +32,36 @@ const PosSlice = createSlice({
       state.products = action.payload;
     },
 
+    setOrderQty: (state, action) => {
+      state.OrderQty = action.payload;
+    },
+
     setCart: (state: PosStateI, action: PayloadAction<CartI>) => {
       // check if product already in cart update it or add product to cart if it's not in cart
-      const cartItem = state.cart.find(
+      const cartItem = state.cartItems.find(
         (item) => item.product.id === action.payload.product.id
       );
       if (cartItem) {
         cartItem.quantity += 1;
       } else {
-        state.cart.push(action.payload);
+        state.cartItems.push(action.payload);
       }
     },
 
+
     removeCartItem: (state: PosStateI, action: PayloadAction<CartI>) => {
-      const cartItem = state.cart.find(
+      const cartItem = state.cartItems.find(
         (item) => item.product.id === action.payload.product.id
       );
       if (cartItem) {
-        state.cart = state.cart.filter(
+        state.cartItems = state.cartItems.filter(
           (item) => item.product.id !== action.payload.product.id
         );
       }
     },
     // update cart item quantity
     updateCart: (state: PosStateI, action: PayloadAction<CartI>) => {
-      const cartItem = state.cart.find(
+      const cartItem = state.cartItems.find(
         (item) => item.product.id === action.payload.product.id
       );
       if (cartItem) {
@@ -65,7 +70,7 @@ const PosSlice = createSlice({
     },
 
     emptyCart: (state: PosStateI) => {
-      state.cart = [];
+      state.cartItems = [];
     },
 
     setSalesDetails: (
@@ -80,6 +85,7 @@ const PosSlice = createSlice({
 export const {
   setProducts,
   setCart,
+  setOrderQty,
   removeCartItem,
   emptyCart,
   updateCart,

@@ -34,6 +34,7 @@ import {
 } from "@expo/vector-icons";
 import { DrawerHeaderBackground, UserIcon } from "../../../assets/images";
 import Pos from "../../Screens/Pos/PosComponent";
+import Receipt from "../../Screens/Receipt/Receipt";
 
 const Drawer = createDrawerNavigator<HomeStackParamList>();
 const SCREEN_HEIGHT = Dimensions.get("screen").height;
@@ -125,6 +126,13 @@ const DrawerStack = () => {
               <MaterialCommunityIcons name="cash" size={size} color={color} />
             );
           },
+        }}
+      />
+      <Drawer.Screen
+        name="Receipt"
+        component={Receipt}
+        options={{
+          headerShown: false,
         }}
       />
     </Drawer.Navigator>
