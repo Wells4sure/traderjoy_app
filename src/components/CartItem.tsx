@@ -5,13 +5,15 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 interface CartItemProps {
   item: CartI;
-  handleEditCartItem: (item: CartI) => void;
-  removeCartItem: (item: CartI) => void;
+  handleEditCartItem?: (item: CartI) => void;
+  viewOnly?: boolean;
+  removeCartItem?: (item: CartI) => void;
 }
 
 const CartItem = ({
   item,
   handleEditCartItem,
+  viewOnly,
   removeCartItem,
 }: CartItemProps) => {
   const SUB_TOTAL = item.price * item.quantity;
@@ -31,8 +33,9 @@ const CartItem = ({
       flexDirection="row"
     >
       <Pressable
-        onPress={() => handleEditCartItem(item)}
+        onPress={() => handleEditCartItem && handleEditCartItem(item)}
         overflow="hidden"
+        disabled={viewOnly}
         borderWidth="1"
         borderColor="coolGray.300"
         shadow="3"
@@ -59,18 +62,20 @@ const CartItem = ({
               {` X ${item.quantity}`}
             </Text>
             <Text fontWeight={"bold"}> {SUB_TOTAL.toFixed(2)}</Text>
-            <IconButton
-              size={"xs"}
-              variant="outline"
-              colorScheme="secondary"
-              _icon={{
-                as: MaterialIcons,
-                name: "close",
-              }}
-              onPress={() => {
-                removeCartItem(item);
-              }}
-            />
+            {viewOnly ? null : (
+              <IconButton
+                size={"xs"}
+                variant="outline"
+                colorScheme="secondary"
+                _icon={{
+                  as: MaterialIcons,
+                  name: "close",
+                }}
+                onPress={() => {
+                  removeCartItem && removeCartItem(item);
+                }}
+              />
+            )}
           </HStack>
         </Box>
       </Pressable>

@@ -37,7 +37,7 @@ export default function CartSections({
             {cartItems &&
               cartItems.map((item, i) => (
                 <CartItem
-                  key={i}
+                  key={item.id || i}
                   item={item}
                   handleEditCartItem={handleEditCartItem}
                   removeCartItem={function (item: CartI): void {

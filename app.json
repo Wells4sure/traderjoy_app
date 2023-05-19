@@ -14,6 +14,22 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "wellington-0h",
+            "project": "trader-joy"
+          }
+        }
+      ]
+    },
+    "extra": {
+      "sentry": {
+        "authToken": "4e39b2d06bde434fac4da792a1aa27ff53e5e1f57e114714a78f55d69754f746"
+      }
+    },
     "ios": {
       "supportsTablet": true,
       "entitlements": {
@@ -28,6 +44,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": ["sentry-expo"]
   }
 }

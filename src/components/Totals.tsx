@@ -8,9 +8,11 @@ interface TotalsProps {
 }
 
 const Totals = ({ cartItems }: TotalsProps) => {
-  const TOTAL = cartItems.reduce((acc, item) => {
-    return acc + item.price * item.quantity;
-  }, 0);
+  const TOTAL = cartItems
+    .reduce((acc, item) => {
+      return acc + item.price * item.quantity;
+    }, 0)
+    .toFixed(2);
 
   return (
     <Box
@@ -24,7 +26,7 @@ const Totals = ({ cartItems }: TotalsProps) => {
       mb={2}
     >
       <Text>Total</Text>
-      <Text fontWeight="bold">K {TOTAL.toFixed(2)}</Text>
+      <Text fontWeight="bold">K {TOTAL}</Text>
     </Box>
   );
 };

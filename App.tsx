@@ -18,6 +18,7 @@ import MainNav from "./src/Navigation/MainNav";
 import "react-native-gesture-handler";
 import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
+import { NetworkProvider } from "react-native-offline";
 
 // Define the config
 const config = {
@@ -33,21 +34,23 @@ declare module "native-base" {
 }
 export default function App() {
   return (
-    <Provider store={store}>
-      <NativeBaseProvider>
-        <Box
-          flex={1}
-          bg="blueGray.500"
-          _text={{
-            color: "white",
-          }}
-          safeAreaTop
-          width="100%"
-        >
-          <MainNav />
-        </Box>
-      </NativeBaseProvider>
-    </Provider>
+    <NetworkProvider>
+      <Provider store={store}>
+        <NativeBaseProvider>
+          <Box
+            flex={1}
+            bg="blueGray.500"
+            _text={{
+              color: "white",
+            }}
+            safeAreaTop
+            width="100%"
+          >
+            <MainNav />
+          </Box>
+        </NativeBaseProvider>
+      </Provider>
+    </NetworkProvider>
   );
 }
 
